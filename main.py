@@ -9,4 +9,4 @@ from daylight_hours import region_capitals, capitals_coordinates
 if __name__ == '__main__':
     caps = region_capitals()
     print(type(caps))
-    # capitals_coordinates(caps)
+    capitals_coordinates(caps)
