@@ -59,6 +59,6 @@ def capitals_coordinates(capitals: pd.DataFrame):
         ["Anadyr", 64.7333, 177.5167]
     ])
     full = df._append(other)
-    full.to_csv("daylight.csv", index=False)
+    full.to_csv("coordinates.csv", index=False)
     print(full)
     print(remaining)
