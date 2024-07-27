@@ -62,3 +62,9 @@ def capitals_coordinates(capitals: pd.DataFrame):
     full.to_csv("coordinates.csv", index=False)
     print(full)
     print(remaining)
+
+
+def coordinates_for_daylight_hours():
+    caps = region_capitals()
+    print(type(caps))
+    capitals_coordinates(caps)
