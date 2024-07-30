@@ -19,7 +19,7 @@ years = {
 }
 
 
-def subject_names(filename: str, sheet: str, col: int = 0):
+def subject_names(filename: str = "Сбор данных.xlsx", sheet: str = "Год", col: int = 0):
     print(type(pd.read_excel(filename, sheet_name=sheet).iloc[:, col].unique()))
     unq = np.array(
         pd.read_excel(filename, sheet_name=sheet).iloc[:, col].unique().tolist()
