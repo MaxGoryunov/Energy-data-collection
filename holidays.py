@@ -225,6 +225,17 @@ def eid_al_adha_date():
         print(date.strftime("%d.%m.%Y"))
 
 
+def text_to_month_dates(sources: list):
+    dates = []
+    for source in sources:
+        day, month, year = source.split()
+        old = formatted_date(int(day), MONTHS.index(month), int(year))
+        actual = datetime.datetime.strptime(old, "%d.%m.%Y") + datetime.timedelta(days=1)
+        dates.append(actual.strftime("%d.%m.%Y"))
+    print(dates)
+    return dates
+
+
 def kurban_bayram():
     sources = [
         "25 октября 2012",
@@ -240,19 +251,12 @@ def kurban_bayram():
         "8 июля 2022",
         "27 июня 2023"
     ]
-    dates = []
-    for source in sources:
-        day, month, year = source.split()
-        old = formatted_date(int(day), MONTHS.index(month), int(year))
-        actual = datetime.datetime.strptime(old, "%d.%m.%Y") + datetime.timedelta(days=1)
-        dates.append(actual.strftime("%d.%m.%Y"))
-    print(dates)
-    return dates
+    return text_to_month_dates(sources)
 
 
 def chaga_bayram():
     # в респ Алтай с 2012
-    return [
+    sources = [
         "26 февраля 2012",
         "17 февраля 2013",
         "7 февраля 2014",
@@ -266,6 +270,7 @@ def chaga_bayram():
         "6 февраля 2022",
         "23 февраля 2023"
     ]
+    return text_to_month_dates(sources)
 
 
 def sagaalgan():
@@ -284,6 +289,25 @@ def sagaalgan():
             dates.append(actual.strftime("%d.%m.%Y"))
     # print(dates)
     return dates
+
+
+def surharban():
+    sources = [
+        "30 июня 2012",
+        "28 июня 2013",
+        "27 июня 2014",
+        "27 июня 2015",
+        "24 июня 2016",
+        "6 июля 2017",
+        "23 июня 2018",
+        "29 июня 2019",
+        "27 июня 2020",
+        "22 июня 2021",
+        "1 июля 2022",
+        "29 июня 2023"
+    ]
+    return text_to_month_dates(sources)
+
 
 def holidays_for_regions():
     regions = subject_names()
