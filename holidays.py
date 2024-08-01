@@ -158,7 +158,7 @@ def region_holidays():
             date_raw = colored[0].text
             # print(date_raw)
             if "Переходящий праздник" in date_raw:
-                unclear.append(line)
+                unclear.append([line, row])
                 # print("is contained")
             else:
                 # print(date_raw)
@@ -180,6 +180,32 @@ def region_holidays():
     df_holidays = pd.DataFrame.from_records(np.array(holidays))
     print(df_holidays)
     return df_holidays, unclear
+
+
+def radonitsa():
+    source = """Радоница в 2012 году — 24 апреля;
+        Радоница в 2013 году — 14 мая;
+        Радоница в 2014 году — 29 апреля;
+        Радоница в 2015 году — 21 апреля;
+        Радоница в 2016 году — 10 мая;
+        Радоница в 2017 году — 25 апреля;
+        Радоница в 2018 году — 17 апреля;
+        Радоница в 2019 году — 7 мая;
+        Радоница в 2020 году — 28 апреля;
+        Радоница в 2021 году — 11 мая;
+        Радоница в 2022 году — 3 мая;
+        Радоница в 2023 году — 25 апреля"""
+    lines = source.split(";")
+    dates = []
+    for line in lines:
+        _, _, year, _, _, day, month = line.split()
+        month_as_num = MONTHS.index(month)
+        date = formatted_date(int(day), month_as_num, int(year))
+        dates.append(date)
+    return dates
+
+
+
 
 
 def holidays_for_regions():
