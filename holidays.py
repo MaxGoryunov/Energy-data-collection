@@ -268,5 +268,22 @@ def chaga_bayram():
     ]
 
 
+def sagaalgan():
+    soup = BeautifulSoup(
+        requests.get("https://ru.wikipedia.org/wiki/%D0%A6%D0%B0%D0%B3%D0%B0%D0%BD_%D0%A1%D0%B0%D1%80").text,
+        "html.parser"
+    )
+    tds = soup.select("table.standard td")
+    dates = []
+    since = datetime.datetime.strptime("01.01.2012", "%d.%m.%Y")
+    until = datetime.datetime.strptime("31.12.2023", "%d.%m.%Y")
+    for td in tds:
+        # print(td.text, len(td.text))
+        actual = datetime.datetime.strptime(td.text.strip(), "%d.%m.%y") + datetime.timedelta(days=1)
+        if since <= actual <= until:
+            dates.append(actual.strftime("%d.%m.%Y"))
+    # print(dates)
+    return dates
+
 def holidays_for_regions():
     regions = subject_names()
