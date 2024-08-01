@@ -10,6 +10,7 @@ from daylight_hours import region_capitals, capitals_coordinates
 
 if __name__ == '__main__':
     df, unclear = region_holidays()
-    for line, row in unclear:
-        print(row["Название"])
+    with open("holidays.txt", "w") as file:
+        for line, row in unclear:
+            print(row["Название"], file=file)
 
