@@ -344,5 +344,25 @@ def zul():
     return text_to_month_dates(sources)
 
 
+def after_easter():
+    sources = [
+        "12 апреля 2015",
+        "1 мая 2016",
+        "16 апреля 2017",
+        "8 апреля 2018",
+        "28 апреля 2019",
+        "19 апреля 2020",
+        "2 мая 2021",
+        "24 апреля 2022",
+        "16 апреля 2023"
+    ]
+    old = text_to_month_dates(sources)
+    dates = []
+    for date in old:
+        dates.append(
+            (datetime.datetime.strptime(date, "%d.%m.%Y") + datetime.timedelta(days=1)).strftime("%d.%m.%Y")
+        )
+
+
 def holidays_for_regions():
     regions = subject_names()
