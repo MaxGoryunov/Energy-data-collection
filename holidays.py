@@ -1,5 +1,7 @@
 import datetime
 import itertools
+from astropy.time import Time
+from astropy import units as u
 import re
 from io import StringIO
 
@@ -8,7 +10,6 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup, Tag
 from population import subject_names
-
 
 YEAR_START = 2012
 YEAR_AFTER_FINISH = 2024
@@ -87,7 +88,6 @@ def numbered_sections(td: Tag):
         if content:
             return formatted_date_from_sections(list(content[0]))
     return ""
-
 
 
 def numbered_and_wordly_sections(td: Tag):
@@ -210,6 +210,47 @@ def uraza_bayram():
             "15.06.2018", "04.06.2019", "24.05.2020", "13.05.2021", "03.05.2022", "22.04.2023"]
 
 
+def eid_al_adha_date():
+    """
+    Рассчитывает дату Курбан-байрама для заданного года по григорианскому календарю.
+
+    Args:
+    year: Год, для которого нужно рассчитать дату.
+
+    Returns:
+    Строка с датой Курбан-байрама в формате "YYYY-MM-DD".
+    """
+    for year in range(YEAR_START, YEAR_AFTER_FINISH):
+        date = Time(f'{year}-07-01') + (10 + int((11 * (year % 19) + 1) / 30)) * u.day
+        print(date.strftime("%d.%m.%Y"))
+
+
+def kurban_bayram():
+    sources = [
+        "25 октября 2012",
+        "14 октября 2013",
+        "4 октября 2014",
+        "23 сентября 2015",
+        "12 сентября 2016",
+        "31 августа 2017",
+        "20 августа 2018",
+        "10 августа 2019",
+        "30 июля 2020",
+        "19 июля 2021",
+        "8 июля 2022",
+        "27 июня 2023"
+    ]
+    dates = []
+    for source in sources:
+        day, month, year = source.split()
+        old = formatted_date(int(day), MONTHS.index(month), int(year))
+        actual = datetime.datetime.strptime(old, "%d.%m.%Y") + datetime.timedelta(days=1)
+        dates.append(actual.strftime("%d.%m.%Y"))
+    print(dates)
+    return dates
+
+
+
+
 def holidays_for_regions():
     regions = subject_names()
-
