@@ -422,5 +422,25 @@ def shagaa():
     return text_to_month_dates(sources)
 
 
+def naadym():
+    sources = [
+        "16 августа 2012",
+        "12 июля 2013",
+        "8 сентября 2014",
+        "24 июля 2015",
+        "16 августа 2016",
+        "14 августа 2017",
+        "16 июля 2018",
+        "17 июля 2018",
+        "15 июля 2019",
+        "16 июля 2019",
+        "3 сентября 2020",
+        "24 сентября 2021",
+        "16 августа 2022",
+        "14 августа 2023"
+    ]
+    return text_to_month_dates(sources)
+
+
 def holidays_for_regions():
     regions = subject_names()
