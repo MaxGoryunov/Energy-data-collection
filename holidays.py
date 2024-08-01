@@ -326,5 +326,23 @@ def buddha_birthday():
     return text_to_month_dates(sources)
 
 
+def zul():
+    sources = [
+        "8 декабря 2012",
+        "27 декабря 2013",
+        "16 декабря 2014",
+        "5 декабря 2015",
+        "23 декабря 2016",
+        "12 декабря 2017",
+        "2 декабря 2018",
+        "21 декабря 2019",
+        "10 декабря 2020",
+        "29 декабря 2021",
+        "18 декабря 2022",
+        "7 декабря 2023"
+    ]
+    return text_to_month_dates(sources)
+
+
 def holidays_for_regions():
     regions = subject_names()
