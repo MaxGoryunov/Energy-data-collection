@@ -344,6 +344,15 @@ def zul():
     return text_to_month_dates(sources)
 
 
+def shift_dates(dates: list, days=1):
+    shifted = []
+    for date in dates:
+        shifted.append(
+            (datetime.datetime.strptime(date, "%d.%m.%Y") + datetime.timedelta(days=days)).strftime("%d.%m.%Y")
+        )
+    return shifted
+
+
 def after_easter():
     sources = [
         "12 апреля 2015",
@@ -357,11 +366,44 @@ def after_easter():
         "16 апреля 2023"
     ]
     old = text_to_month_dates(sources)
+    return shift_dates(old)
+
+
+def holy_trinity():
+    sources = [
+        "3 июня 2012",
+        "23 июня 2013",
+        "8 июня 2014",
+        "31 мая 2015",
+        "19 июня 2016",
+        "4 июня 2017",
+        "27 мая 2018",
+        "16 июня 2019",
+        "7 июня 2020",
+        "20 июня 2021",
+        "12 июня 2022",
+        "4 июня 2023"
+    ]
+    return shift_dates(text_to_month_dates(sources))
+
+
+def all_souls_day():
+    soup = BeautifulSoup(
+        requests.get("https://docs.cntd.ru/document/424090174").text,
+        "html.parser"
+    )
+    table = soup.select("#P0013")
+    df = pd.concat(pd.read_html(StringIO(str(table[0]))))[2:].reset_index(drop=True)
+    print(df)
     dates = []
-    for date in old:
-        dates.append(
-            (datetime.datetime.strptime(date, "%d.%m.%Y") + datetime.timedelta(days=1)).strftime("%d.%m.%Y")
-        )
+    for index, row in df.iterrows():
+        year = int(row[0])
+        if YEAR_START <= year < YEAR_AFTER_FINISH:
+            day, month = row[1].split()
+            dates.append(formatted_date(int(day), MONTHS.index(month), year))
+    # print(dates)
+    return dates
+
 
 
 def holidays_for_regions():
