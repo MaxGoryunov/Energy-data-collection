@@ -405,6 +405,22 @@ def all_souls_day():
     return dates
 
 
+def shagaa():
+    sources = [
+        "22 февраля 2012",
+        "9 февраля 2013",
+        "31 января 2014",
+        "9 февраля 2016",
+        "27 февраля 2017",
+        "16 февраля 2018",
+        "5 февраля 2019",
+        "24 февраля 2020",
+        "12 февраля 2021",
+        "1 февраля 2022",
+        "21 февраля 2023"
+    ]
+    return text_to_month_dates(sources)
+
 
 def holidays_for_regions():
     regions = subject_names()
