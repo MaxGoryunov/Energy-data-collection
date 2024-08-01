@@ -308,6 +308,23 @@ def surharban():
     ]
     return text_to_month_dates(sources)
 
+def buddha_birthday():
+    sources = [
+        "4 июня 2012",
+        "25 мая 2013",
+        "14 июня 2014",
+        "2 июня 2015",
+        "21 мая 2016",
+        "9 июня 2017",
+        "29 мая 2018",
+        "17 июня 2019",
+        "5 июня 2020",
+        "26 мая 2021",
+        "14 июня 2022",
+        "4 июня 2023"
+    ]
+    return text_to_month_dates(sources)
+
 
 def holidays_for_regions():
     regions = subject_names()
