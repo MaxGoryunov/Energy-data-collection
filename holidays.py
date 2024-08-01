@@ -158,7 +158,7 @@ def region_holidays():
             date_raw = colored[0].text
             # print(date_raw)
             if "Переходящий праздник" in date_raw:
-                unclear.append([line, row])
+                unclear.append([colored, row])
                 # print("is contained")
             else:
                 # print(date_raw)
@@ -440,6 +440,47 @@ def naadym():
         "14 августа 2023"
     ]
     return text_to_month_dates(sources)
+
+
+def holiday_lists():
+    return {
+        "Радоница": radonitsa(),
+        "Ураза-Байрам": uraza_bayram(),
+        "Курбан-Байрам": kurban_bayram(),
+        "Чага-Байрам": chaga_bayram(),
+        "Сагаалган": sagaalgan(),
+        "Ид аль-Фитр": uraza_bayram(),
+        "Ид аль-Адха": kurban_bayram(),
+        "Сур-Харбан": surharban(),
+        "Цаган Сар": sagaalgan(),
+        "День рождения Будды Шакьямуни": buddha_birthday(),
+        "Зул": zul(),
+        "Курбан Байрам": kurban_bayram(),
+        "Светлое Христово Воскресение": after_easter(),
+        "Ораза-Байрам": uraza_bayram(),
+        "День Святой Троицы": holy_trinity(),
+        "Единый день поминовения усопших": all_souls_day(),
+        "Шагаа": shagaa(),
+        "Наадым": naadym(),
+    }
+
+
+def plain_days_for_regions():
+    regions = pd.DataFrame(subject_names())
+    print(regions)
+    all_time = process_years()
+    print(all_time)
+    result = regions.merge(all_time, how="cross").reset_index(drop=True)
+    return result
+
+
+def fill_movable_holiday():
+    df_holidays, movable = region_holidays()
+    print(df_holidays)
+    for colored, row in movable:
+        since = holiday_established_date(colored[-1])
+
+
 
 
 def holidays_for_regions():
