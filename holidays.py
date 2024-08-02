@@ -529,5 +529,21 @@ def fill_movable_holiday():
     return pd.concat([df_holidays, df_additional])
 
 
+def updated_holidays():
+    plain = plain_days_for_regions()
+    plain.columns = ["subject", "date", "work/holiday"]
+    updates = fill_movable_holiday()
+    updates.columns = ["subject", "date"]
+    updates["work/holiday"] = 1
+    updates = updates.set_index(["subject", "date"])
+    plain = plain.set_index(["subject", "date"])
+    print(plain)
+    print(updates)
+    for index, row in updates.iterrows():
+        # print(index)
+        plain.loc[index] = 1
+    return plain
+
+
 def holidays_for_regions():
     regions = subject_names()
