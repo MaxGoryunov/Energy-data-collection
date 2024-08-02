@@ -165,7 +165,7 @@ def region_holidays():
                 day, month = date_raw.split()
                 month_as_num = MONTHS.index(month)
                 established = holiday_established_date(colored[-1])
-                print(date_raw, established)
+                # print(date_raw, established)
                 since = datetime.datetime.strptime(
                     established,
                     "%d.%m.%Y"
@@ -178,7 +178,7 @@ def region_holidays():
                     if date > since:
                         holidays.append([row["Субъект РФ"], date.strftime("%d.%m.%Y")])
     df_holidays = pd.DataFrame.from_records(np.array(holidays))
-    print(df_holidays)
+    # print(df_holidays)
     return df_holidays, unclear
 
 
@@ -232,7 +232,7 @@ def text_to_month_dates(sources: list):
         old = formatted_date(int(day), MONTHS.index(month), int(year))
         actual = datetime.datetime.strptime(old, "%d.%m.%Y") + datetime.timedelta(days=1)
         dates.append(actual.strftime("%d.%m.%Y"))
-    print(dates)
+    # print(dates)
     return dates
 
 
@@ -394,7 +394,7 @@ def all_souls_day():
     )
     table = soup.select("#P0013")
     df = pd.concat(pd.read_html(StringIO(str(table[0]))))[2:].reset_index(drop=True)
-    print(df)
+    # print(df)
     dates = []
     for index, row in df.iterrows():
         year = int(row[0])
@@ -474,13 +474,59 @@ def plain_days_for_regions():
     return result
 
 
+def replace_wrong_region_names_for_holidays(df: pd.DataFrame):
+    return (
+        df
+        .replace("Алтай", "Республика Алтай", regex=True)
+        .replace("Башкортостан", "Республика Башкортостан", regex=True)
+        .replace("Бурятия", "Республика Бурятия", regex=True)
+        .replace("Дагестан", "Республика Дагестан", regex=True)
+        .replace("Ингушетия", "Республика Ингушетия", regex=True)
+        .replace("Кабардино-Балкария", "Кабардино-Балкарская Республика", regex=True)
+        .replace("Калмыкия", "Республика Калмыкия", regex=True)
+        .replace("Карачаево-Черкессия", "Карачаево-Черкесская Республика", regex=True)
+        .replace("Крым", "Республика Крым", regex=True)
+        .replace("Татарстан", "Республика Татарстан", regex=True)
+        .replace("Тыва", "Республика Тыва", regex=True)
+        .replace("Чечня", "Чеченская Республика", regex=True)
+        .replace("Коми", "Республика Коми", regex=True)
+        .replace("Севастополь", "г. Севастополь", regex=True)
+        .replace("Удмуртия", "Республика Удмуртия", regex=True)
+        .replace("Чувашия", "Чувашская Республика", regex=True)
+        .replace("Якутия", "Республика Саха (Якутия)", regex=True)
+    )
+
+
 def fill_movable_holiday():
     df_holidays, movable = region_holidays()
-    print(df_holidays)
+    # print(df_holidays)
+    local_dates = holiday_lists()
+    additional = []
     for colored, row in movable:
-        since = holiday_established_date(colored[-1])
-
-
+        established = holiday_established_date(colored[-1])
+        if established is None:
+            established = "01.01.2001"
+        since = datetime.datetime.strptime(established, "%d.%m.%Y")
+        # print(colored[1].text.strip(), since.strftime("%d.%m.%Y"))
+        for name, dates in local_dates.items():
+            if name in colored[1].text:
+                for date in dates:
+                    comparable = datetime.datetime.strptime(date, "%d.%m.%Y")
+                    if comparable >= since:
+                        additional.append([row["Субъект РФ"], date])
+                        # print(row["Субъект РФ"].strip(), date)
+        # print("----")
+    print(additional)
+    df_additional = pd.DataFrame.from_records(np.array(additional))
+    df_additional = replace_wrong_region_names_for_holidays(df_additional)
+    df_holidays = replace_wrong_region_names_for_holidays(df_holidays)
+    # names = df_holidays.iloc[:, 0].unique().tolist()
+    # regions = subject_names()
+    # diff = [name for name in names if name not in regions]
+    # print(diff)
+    # print(df_holidays)
+    # print(df_additional)
+    return pd.concat([df_holidays, df_additional])
 
 
 def holidays_for_regions():

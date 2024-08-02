@@ -10,5 +10,5 @@ from daylight_hours import region_capitals, capitals_coordinates
 
 
 if __name__ == '__main__':
-    plain_days_for_regions()
+    fill_movable_holiday()
 
