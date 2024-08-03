@@ -10,9 +10,8 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup, Tag
 from population import subject_names
+from utils import YEAR_START, YEAR_AFTER_FINISH
 
-YEAR_START = 2012
-YEAR_AFTER_FINISH = 2024
 MONTHS = [
     "ZERO", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября",
     "декабря"

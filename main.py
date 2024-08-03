@@ -7,8 +7,8 @@ from holidays import month_tables, process_months, process_years, region_holiday
 from population import subject_names, yearly_population, test_non_found_regions, format_search_data, remaining_regions, \
     fill_remaining_yearly_population, population_report
 from daylight_hours import region_capitals, capitals_coordinates
-from weather import region_capitals_russian
+from weather import region_centres_russian, weather_region_names
 
 if __name__ == '__main__':
-    region_capitals_russian()
+    region_centres_russian()
 
