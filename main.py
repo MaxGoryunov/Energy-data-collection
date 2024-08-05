@@ -8,8 +8,8 @@ from population import subject_names, yearly_population, test_non_found_regions,
     fill_remaining_yearly_population, population_report
 from daylight_hours import region_capitals, capitals_coordinates
 from weather import region_centres_russian, weather_region_names, weather_data, open_meteo_data, \
-    region_to_centre
+    region_to_centre, centre_to_region_translated
 
 if __name__ == '__main__':
-    region_to_centre()
+    open_meteo_data()
 
