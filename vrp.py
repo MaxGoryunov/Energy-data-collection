@@ -12,7 +12,7 @@ def vrp_up_to_2015():
     df.columns = df.iloc[1]
     df = (df.iloc[3:].rename(columns={np.nan: "region"}))
     df = df[~(df["region"].str.endswith("федеральный округ"))] \
-             .reset_index(drop=True).loc[:, ["region", *range(2012, 2016)]]
+        .reset_index(drop=True).loc[:, ["region", *range(2012, 2016)]]
     # print(df[60:70])
     rewrite = [(20, 22), (61, 64)]
     dropped = [dest for source, dest in rewrite]
