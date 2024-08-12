@@ -34,5 +34,15 @@ def properly_named_investment():
         else:
             df.loc[index, "region"] = matches[0]
         print(region, matches)
+    for year in range(2012, 2024):
+        df.loc[:, year] = 1_000_000 * df.loc[:, year]
+    df = df.rename(columns={year: f"01.01.{year}" for year in [*range(2012, 2024)]})
+    print(df)
+    df = df.melt(
+        id_vars=["region"],
+        value_vars=[col for col in df.columns if col != "region"],
+        var_name="date",
+        value_name="investment"
+    ).sort_values(by=["region", "date"]).reset_index(drop=True)
     print(df)
     df.to_csv("investment.csv", index=False)

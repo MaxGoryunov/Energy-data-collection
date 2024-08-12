@@ -2,6 +2,7 @@ from functools import reduce
 
 import pandas as pd
 
+from aggreg import aggregation_by_year
 from holidays import month_tables, process_months, process_years, region_holidays, radonitsa, eid_al_adha_date, \
     kurban_bayram, sagaalgan, all_souls_day, fill_movable_holiday, plain_days_for_regions, updated_holidays
 from investment import investment, properly_named_investment
@@ -14,5 +15,5 @@ from weather import region_centres_russian, weather_region_names, weather_data, 
     region_to_centre, centre_to_region_translated
 
 if __name__ == '__main__':
-    properly_named_investment()
+    aggregation_by_year()
 

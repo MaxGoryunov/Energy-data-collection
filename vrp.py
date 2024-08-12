@@ -75,8 +75,17 @@ def combined_vrp():
     combined = combined[["region", *range(2012, 2023)]].reset_index(drop=True)
     print(combined.index.name)
     print(combined.columns)
+    renamed = {}
     for year in range(2012, 2023):
         combined.loc[:, year] = 1000000 * combined.loc[:, year]
-    combined.to_csv("vrp.csv", index=False)
+        renamed[year] = f"01.01.{year}"
+    combined = combined.rename(columns=renamed)
+    combined = combined.melt(
+        id_vars=["region"],
+        value_vars=[col for col in combined.columns if col != "region"],
+        var_name="date",
+        value_name="vrp"
+    ).sort_values(by=["region", "date"]).reset_index(drop=True)
     print(combined)
+    combined.to_csv("vrp.csv", index=False)
     return combined

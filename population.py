@@ -15,7 +15,8 @@ years = {
     "01.01.2020": ("Tabl-01-20.xls", "Табл. 1", 1, 1),
     "01.01.2021": ("Tabl-01-21.xls", "Табл. 1", 1, 1),
     "01.01.2022": ("Chisl_nasel_RF_MO_01-01-2022.xlsx", "Таб_1", 1, 0),
-    "01.01.2023": ("BUL_MO_2023.xlsx", "Таб_1", 1, 0)
+    "01.01.2023": ("BUL_MO_2023.xlsx", "Таб_1", 1, 0),
+    "01.01.2024": ("BUL_MO_2024.xlsx", "Таб_1", 1, 0)
 }
 
 
@@ -131,6 +132,7 @@ def population_report():
         fill_remaining_yearly_population(yearly, remaining)
         # print(yearly[0:10])
         total.append(yearly)
+        print(year, len(yearly))
         # print(yearly.columns)
     merged = reduce(lambda left, right: pd.merge(left, right, on=["Субъект РФ"], how="outer"), total)
     # merged =
@@ -139,6 +141,9 @@ def population_report():
         id_vars=["Субъект РФ"],
         value_vars=[col for col in merged.columns if col != "Субъект РФ"],
         var_name="Дата",
-        value_name="Численность населения"
-    ).sort_values(by=["Субъект РФ", "Дата"]).reset_index(drop=True)
+        value_name="population"
+    ).sort_values(by=["Субъект РФ", "Дата"]).reset_index(drop=True).rename(
+        columns={"Субъект РФ": "region", "Дата": "date", }
+    )
     print(melted)
+    melted.to_csv("population.csv", index=False)
